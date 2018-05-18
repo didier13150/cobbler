@@ -1,0 +1,3 @@
+# Install and setup rkhunter
+yum install -y rkhunter
+rkhunter --propupd

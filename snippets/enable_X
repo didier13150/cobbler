@@ -1,0 +1,5 @@
+# Enable X at startup if desktop is installed
+#set $el_type = $getVar('type', 'minimal')
+#if $el_type == "desktop"
+sed -i -e '/^id/ s/3/5/' /etc/inittab
+#end if

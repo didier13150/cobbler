@@ -1,0 +1,20 @@
+#if $str($getVar('func_auto_setup','')) == "1"
+func
+#end if
+clearpart --all
+#set $el_type = $getVar('type', 'minimal')
+#set $el_version = $getVar('os_version', 'rhel7')
+#if $el_version == "rhel6"
+part /boot --size=200 --recommended --asprimary
+#else if $el_version == "rhel7"
+part /boot --size=500 --recommended --asprimary
+#end if
+part pv.01 --size=1024 --grow
+volgroup vg0 pv.01
+#if $el_type == "desktop"
+logvol /    --vgname=vg0 --name=lv0 --size=3072 --maxsize=4096 --grow --fsoption=defaults,noatime
+#else
+logvol /    --vgname=vg0 --name=lv0 --size=1536 --maxsize=3072 --grow --fsoption=defaults,noatime
+#end if
+logvol /var --vgname=vg0 --name=lv1 --size=512  --maxsize=1024 --grow --fsoption=defaults,noatime
+logvol swap --vgname=vg0 --name=lv2 --size=1024 --maxsize=2048 --grow

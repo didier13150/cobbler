@@ -1,0 +1,7 @@
+#set $el_type = $getVar('type', 'minimal')
+#if $el_type == "desktop"
+# Configure the X Window System
+xconfig  --startxonboot
+#else
+skipx
+#end if

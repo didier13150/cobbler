@@ -1,0 +1,6 @@
+# Disable prelink if needed
+if [ -f "/etc/sysconfig/prelink" ]
+then
+	sed -i -e '/PRELINKING/ s/yes/no/' /etc/sysconfig/prelink
+fi
+

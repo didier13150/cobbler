@@ -1,0 +1,8 @@
+# Add epel and rpmforge (el6 only) repositories
+#set $el_version = $getVar('os_version', None)
+#if $el_version == "rhel6"
+yum install -y epel-release rpmforge-release
+#else if $el_version == "rhel7"
+yum install -y epel-release
+#end if
+

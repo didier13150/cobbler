@@ -1,0 +1,9 @@
+# Make journal persistant if needed
+
+#set $el_version = $getVar('os_version', 'rhel7')
+#if $el_version == "rhel7"
+if [ ! -d "/var/log/journal" ]
+then
+  mkdir -p /var/log/journal
+fi
+#end if
