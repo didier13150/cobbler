@@ -79,7 +79,9 @@ CentOS 7 Desktop
 
 ## Rebuild the image on your own
 
-    docker build -t local/cobbler .
+    docker build -t local/docker-cobbler .
+    
+Anf use replace `tartarefr/docker-cobbler` by `local/docker-cobbler`
 
 ## License
 
