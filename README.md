@@ -2,17 +2,17 @@
 
 ## Runtime Env
 
-| Name                     | MANDATORY     | Comment | Default value |
-| :----------------------- | :------------ | :------------------------------------- | :------------- |
-|  __HOST_IP_ADDR__        | __MANDATORY__ | Physical host IP address (usefull for cobbler_api) |
-|  __HOST_HTTP_PORT__      | Optional      | Physical host IP port connected to HTTP port on container (usefull for cobbler_api) | 80 |
-|  __DEFAULT_ROOT_PASSWD__ | Optional      | Default root password | cobbler |
-|  __COBBLER_WEB_USER__    | Optional      | Cobbler user for cobbler_web digest | cobbler |
-|  __COBBLER_WEB_PASSWD__  | Optional      |Cobbler password for cobbler_web digest | cobbler |
-|  __COBBLER_WEB_REALM__   | Optional      | Cobbler realm for cobbler_web digest | Cobbler |
-|  __COBBLER_LANG__        | Optional      | lang to setup in target |fr_FR |
-|  __COBBLER_KEYBOARD__    | Optional      | keyboard to setup in target | fr-latin-9 |
-|  __COBBLER_TZ__          | Optional      | Timezone to setup in target | Europe/Paris |
+| Name                   | Presence      | Default value | Comment                                                   |
+| :--------------------- | :-----------: | :-----------: | :-------------------------------------------------------- |
+|  `HOST_IP_ADDR`        | __MANDATORY__ |               | Physical host IP address (usefull for cobbler_api)        |
+|  `HOST_HTTP_PORT`      | Optional      | 80            | Physical host IP port connected to HTTP port on container |
+|  `DEFAULT_ROOT_PASSWD` | Optional      | cobbler       | Default root password                                     |
+|  `COBBLER_WEB_USER`    | Optional      | cobbler       | Cobbler user for cobbler_web digest                       |
+|  `COBBLER_WEB_PASSWD`  | Optional      | cobbler       | Cobbler password for cobbler_web digest                   |
+|  `COBBLER_WEB_REALM`   | Optional      | Cobbler       | Cobbler realm for cobbler_web digest                      |
+|  `COBBLER_LANG`        | Optional      | fr_FR         | Lang to setup in target                                   |
+|  `COBBLER_KEYBOARD`    | Optional      | fr-latin-9    | Keyboard to setup in target                               |
+|  `COBBLER_TZ`          | Optional      | Europe/Paris  | Timezone to setup in target                               |
 
 ## Setup before runtime
 
