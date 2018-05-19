@@ -1,35 +1,56 @@
 # Cobbler
 
-## Build image
-
-    docker build -t local/cobbler .
+[![cobbler logo](https://cobbler.github.io/images/logo-brand.png)](http://cobbler.github.io/ "cobbler")
 
 ## Runtime Env
 
-* HOST_IP_ADDR: Physical host IP address (for cobbler_api): MANDATORY
-* HOST_HTTP_PORT: Physical host IP port connected to HTTP port on container (for cobbler_api) (default is 80)
-* DEFAULT_ROOT_PASSWD: Default root password (default is cobbler): Optional
-* COBBLER_WEB_USER: Cobbler user for cobbler_web digest (default is cobbler): Optional
-* COBBLER_WEB_PASSWD: Cobbler password for cobbler_web digest (default is cobbler): Optional
-* COBBLER_WEB_REALM: Cobbler realm for cobbler_web digest (default is Cobbler): Optional
-* COBBLER_LANG: lang to use (default is fr_FR): Optional
-* COBBLER_KEYBOARD keyboard to use (default is fr-latin-9): Optional
-* COBBLER_TZ: Timezone to use (default is Europe/Paris): Optional
+*  __HOST_IP_ADDR__ : __MANDATORY__
+   Physical host IP address (usefull for cobbler_api)
+*  __HOST_HTTP_PORT__ : Optional
+   Physical host IP port connected to HTTP port on container (usefull for cobbler_api)
+   default is 80 but in the following example var is set to 60080
+*  __DEFAULT_ROOT_PASSWD__ : Optional
+   Default root password
+   default is cobbler
+*  __COBBLER_WEB_USER__ : Optional
+   Cobbler user for cobbler_web digest
+   default is cobbler
+*  __COBBLER_WEB_PASSWD__ : Optional
+   Cobbler password for cobbler_web digest
+   default is cobbler
+*  __COBBLER_WEB_REALM__ : Optional
+   Cobbler realm for cobbler_web digest
+   default is Cobbler
+*  __COBBLER_LANG__ : Optional
+   lang to setup in target
+   default is fr_FR
+*  __COBBLER_KEYBOARD__ : Optional
+   keyboard to setup in target
+   default is fr-latin-9
+*  __COBBLER_TZ__ : Optional
+   Timezone to setup in target
+   default is Europe/Paris
 
-## Runtime
+## Setup before runtime
 
-On host, we mount iso in the directory /mnt/centos (which will be shared with container).
+On host, we create a mount point for the iso file
 
     sudo mkdir /mnt/centos
+    
+Always on host, we mount iso in the mount point /mnt/centos (which will be shared with container).
 
     sudo mount -o ro /path/to/isos/CentOS-7-x86_64-DVD-1804.iso /mnt/centos
-    
+
+We create our docker volumes. The last is optionnal if host kernel is upper or equal to 4.7
+
     docker volume create cobbler_www
     docker volume create cobbler_tftp
     docker volume create cobbler_config
     docker volume create cobbler_backup
     docker volume create cobbler_run
     
+## Start the container
+
     docker run -d \
                -v cobbler_www:/var/www/cobbler:Z \
                -v cobbler_tftp:/var/lib/tftp:Z \
@@ -51,7 +72,7 @@ On host, we mount iso in the directory /mnt/centos (which will be shared with co
                -p 60443:443 \
                -p 25151:25151 \
                --name cobbler \
-               local/cobbler:latest
+               tartarefr/docker-cobbler:latest
 
 ### Import distros
 
@@ -71,6 +92,14 @@ CentOS 7 Desktop
     
     cobbler profile edit --name CentOS-7-x86_64-Desktop --ksmeta="type=desktop"
 
+## Rebuild the image on your own
+
+    docker build -t local/cobbler .
+
 ## License
 
 All files are licensed under the GPLv3 (See COPYING file)
+
+## Known issues
+
+* Iso file must be mounted on host before starting container. Unfortunatly iso can not be replaced (unmounted-mounted in the same place) when container is created.
