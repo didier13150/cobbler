@@ -1,35 +1,18 @@
-# Cobbler
-
 [![cobbler logo](https://cobbler.github.io/images/logo-brand.png)](http://cobbler.github.io/ "cobbler")
 
 ## Runtime Env
 
-*  __HOST_IP_ADDR__ : __MANDATORY__
-   Physical host IP address (usefull for cobbler_api)
-*  __HOST_HTTP_PORT__ : Optional
-   Physical host IP port connected to HTTP port on container (usefull for cobbler_api)
-   default is 80 but in the following example var is set to 60080
-*  __DEFAULT_ROOT_PASSWD__ : Optional
-   Default root password
-   default is cobbler
-*  __COBBLER_WEB_USER__ : Optional
-   Cobbler user for cobbler_web digest
-   default is cobbler
-*  __COBBLER_WEB_PASSWD__ : Optional
-   Cobbler password for cobbler_web digest
-   default is cobbler
-*  __COBBLER_WEB_REALM__ : Optional
-   Cobbler realm for cobbler_web digest
-   default is Cobbler
-*  __COBBLER_LANG__ : Optional
-   lang to setup in target
-   default is fr_FR
-*  __COBBLER_KEYBOARD__ : Optional
-   keyboard to setup in target
-   default is fr-latin-9
-*  __COBBLER_TZ__ : Optional
-   Timezone to setup in target
-   default is Europe/Paris
+| Name                     | MANDATORY     | Comment | Default value |
+| :----------------------- | :------------ | :------------------------------------- | :------------- |
+|  __HOST_IP_ADDR__        | __MANDATORY__ | Physical host IP address (usefull for cobbler_api) |
+|  __HOST_HTTP_PORT__      | Optional      | Physical host IP port connected to HTTP port on container (usefull for cobbler_api) | 80 |
+|  __DEFAULT_ROOT_PASSWD__ | Optional      | Default root password | cobbler |
+|  __COBBLER_WEB_USER__    | Optional      | Cobbler user for cobbler_web digest | cobbler |
+|  __COBBLER_WEB_PASSWD__  | Optional      |Cobbler password for cobbler_web digest | cobbler |
+|  __COBBLER_WEB_REALM__   | Optional      | Cobbler realm for cobbler_web digest | Cobbler |
+|  __COBBLER_LANG__        | Optional      | lang to setup in target |fr_FR |
+|  __COBBLER_KEYBOARD__    | Optional      | keyboard to setup in target | fr-latin-9 |
+|  __COBBLER_TZ__          | Optional      | Timezone to setup in target | Europe/Paris |
 
 ## Setup before runtime
 
@@ -50,6 +33,8 @@ We create our docker volumes. The last is optionnal if host kernel is upper or e
     docker volume create cobbler_run
     
 ## Start the container
+
+Default value for HOST_HTTP_PORT is 80, but in this example we use the 60080 port.
 
     docker run -d \
                -v cobbler_www:/var/www/cobbler:Z \
