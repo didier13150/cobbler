@@ -8,6 +8,8 @@ clearpart --all
 part /boot --size=200 --recommended --asprimary
 #else if $el_version == "rhel7"
 part /boot --size=500 --recommended --asprimary
+#else
+part /boot --size=1024 --recommended --asprimary
 #end if
 part pv.01 --size=1024 --grow
 volgroup vg0 pv.01
