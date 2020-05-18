@@ -24,7 +24,7 @@ Always on host, we mount iso in the mount point /mnt/centos (which will be share
 
     sudo mount -o ro /path/to/isos/CentOS-7-x86_64-DVD-1804.iso /mnt/centos
 
-We create our docker volumes. The last is optionnal if host kernel is upper or equal to 4.7
+We create our docker volumes. The last is not mandatory if host kernel is upper or equal to 4.7
 
     docker volume create cobbler_www
     docker volume create cobbler_tftp
@@ -81,7 +81,7 @@ CentOS 7 Desktop
 
     docker build -t local/docker-cobbler .
     
-Anf use replace `tartarefr/docker-cobbler` by `local/docker-cobbler`
+And use replace `tartarefr/docker-cobbler` by `local/docker-cobbler`
 
 ## License
 
@@ -89,4 +89,6 @@ All files are licensed under the GPLv3 (See COPYING file)
 
 ## Known issues
 
-* Iso file must be mounted on host before starting container. Unfortunatly iso can not be replaced (unmounted-mounted in the same place) when container is created.
+* Iso file must be mounted on host before starting container. Unfortunatly iso cannot be replaced (unmounted-mounted in the same place) when container is created.
+* With SELinux set to enforcing, container can read iso mounted directory content only with `--privileged` option
+* Ports 69 and 25151 cannot be changed on host
