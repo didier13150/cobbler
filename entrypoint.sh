@@ -40,6 +40,18 @@ COBBLER_WEB_REALM=${COBBLER_WEB_REALM:-cobbler}
 COBBLER_LANG=${COBBLER_LANG:-fr_FR}
 COBBLER_KEYBOARD=${COBBLER_KEYBOARD:-fr-latin9}
 COBBLER_TZ=${COBBLER_TZ:-Europe/Paris}
+OPENSSL_SUBJECT=${OPENSSL_SUBJECT:-/C=FR/ST=Paris/L=Paris/O=Example/CN=localhost}
+
+if [ ! -f "/etc/pki/tls/private/localhost.key" ]
+then
+  openssl req -new \
+              -newkey rsa:4096 \
+              -days 365 \
+              -nodes -x509 \
+              -subj "$OPENSSL_SUBJECT" \
+              -keyout /etc/pki/tls/private/localhost.key \
+              -out /etc/pki/tls/certs/localhost.crt
+fi
 
 if [ -z "${HOST_IP_ADDR}" ]
 then
