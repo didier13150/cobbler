@@ -1,2 +1,0 @@
-# Update all packages
-yum update -y

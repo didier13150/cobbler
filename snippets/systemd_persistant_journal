@@ -6,4 +6,9 @@ if [ ! -d "/var/log/journal" ]
 then
   mkdir -p /var/log/journal
 fi
+#else if $el_version == "rhel8"
+if [ ! -d "/var/log/journal" ]
+then
+  mkdir -p /var/log/journal
+fi
 #end if

@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  cobbler:
+    restart: always
+    image: tartarefr/cobbler:8
+    ports:
+      - "192.168.122.1:69:69/udp"
+      - "192.168.122.1:18080:80"
+      - "192.168.122.1:18443:443"
+      - "192.168.122.1:25151:25151"
+    volumes:
+      - www:/var/www/cobbler:Z
+      - tftp:/var/lib/tftpboot:Z
+      - config:/var/lib/cobbler/config:Z
+      - backup:/var/lib/cobbler/collections:Z
+      - backup:/var/lib/cobbler/backup:Z
+      - logs:/var/log/cobbler:Z
+      - /mnt/distros:/mnt/distros:Z
+    environment:
+      - "DEFAULT_ROOT_PASSWD=azerty"
+      - "HOST_IP_ADDR=192.168.122.1"
+      - "HOST_HTTP_PORT=18080"
+      #- "COBBLER_WEB_USER=cobbler"
+      #- "COBBLER_WEB_PASSWD=cobbler"
+      #- "COBBLER_WEB_REALM=Cobbler"
+      - "COBBLER_LANG=fr_FR"
+      - "COBBLER_KEYBOARD=fr-latin9"
+      - "COBBLER_TZ=Europe/Paris"
+      - "COBBLER_HOSTNAME=cobbler.tartarefr.eu"
+      #- "COBBLER_WEB_CERT=/etc/pki/tls/certs/localhost.crt"
+      #- "COBBLER_WEB_KEY=/etc/pki/tls/private/localhost.key"
+      #- "COBBLER_WEB_KEYSIZE=2048"
+      #- "COBBLER_CERT_COUNTRY=FR"
+      #- "COBBLER_CERT_STATE=Occitanie"
+      #- "COBBLER_CERT_CITY=Beaucaire"
+      #- "COBBLER_CERT_ORGNAME=Home"
+      #- "COBBLER_CERT_ORGUNIT=SysAdmin"
+      #- "COBBLER_CERT_HOSTNAME=cobbler.tartarefr.eu"
+      #- "COBBLER_CERT_EMAIL=root@cobbler.tartarefr.eu"
+
+volumes:
+  www:
+  tftp:
+  config:
+  collections:
+  backup:
+  logs:
+

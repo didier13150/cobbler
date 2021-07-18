@@ -1,35 +1,4 @@
 #!/bin/bash
-##############################################################################
-#       ____              ____    _       _   _                              #
-#      /# /_\_           |  _ \  (_)   __| | (_)   ___   _ __                #
-#     |  |/o\o\          | | | | | |  / _` | | |  / _ \ | '__|               #
-#     |  \\_/_/          | |_| | | | | (_| | | | |  __/ | |                  #
-#    / |_   |            |____/  |_|  \__,_| |_|  \___| |_|                  #
-#   |  ||\_ ~|                                                               #
-#   |  ||| \/                                                                #
-#   |  |||                                                                   #
-#   \//  |                                                                   #
-#    ||  |       Developper : Didier FABERT <didier@tartarefr.eu>            #
-#    ||_  \      Date : 2018, May                                            #
-#    \_|  o|                                             ,__,                #
-#     \___/      Copyright (C) 2018 by Didier FABERT     (oo)____            #
-#      ||||__                                            (__)    )\          #
-#      (___)_)                                             ||--||  *         #
-#                                                                            #
-#    This program is free software; you can redistribute it and/or modify    #
-#    it under the terms of the GNU General Public License as published by    #
-#    the Free Software Foundation; either version 3 of the License, or       #
-#    (at your option) any later version.                                     #
-#                                                                            #
-#    This program is distributed in the hope that it will be useful,         #
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #
-#    GNU General Public License for more details.                            #
-#                                                                            #
-#    You should have received a copy of the GNU General Public License       #
-#    along with this program; if not, see                                    #
-#    <http://www.gnu.org/licenses/>                                          #
-##############################################################################
 
 timeout=30
 while ! netstat -laputen | grep -i listen | grep 25151 1>/dev/null 2>&1
@@ -43,9 +12,23 @@ do
   fi
 done
 sleep 2
-echo "cobbler get-loaders"
-cobbler get-loaders
+echo "cobbler signature update"
+cobbler signature update
+[ $? -eq 0 ] || exit 1
+#echo "cobbler get-loaders" #deprecated, bugged and strongly discouraged
+#cobbler get-loaders
+cp -f /usr/share/syslinux/{ldlinux.c32,libcom32.c32,libutil.c32,menu.c32,pxelinux.0} /var/lib/cobbler/loaders
 echo "cobbler sync"
 cobbler sync
+[ $? -eq 0 ] || exit 1
 echo "cobbler check"
 cobbler check
+
+cobbler image list | grep memtest 1>/dev/null 2>&1
+retval=$?
+if [ ${retval} -ne 0 ]
+then
+  image=$(ls /boot/memtest*)
+  cobbler image add --name=memtest --file=${image} --image-type=direct
+fi
+supervisorctl start rsyncd

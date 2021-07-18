@@ -1,8 +1,7 @@
-# Add epel repository
+# Update all packages
 #set $el_version = $getVar('os_version', None)
 #if $el_version == "rhel7"
-yum install -y epel-release
+yum update -y
 #else if $el_version == "rhel8"
-dnf install -y epel-release
+dnf upgrade -y
 #end if
-

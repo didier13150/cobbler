@@ -4,9 +4,7 @@ func
 clearpart --all
 #set $el_type = $getVar('type', 'minimal')
 #set $el_version = $getVar('os_version', 'rhel7')
-#if $el_version == "rhel6"
-part /boot --size=200 --recommended --asprimary
-#else if $el_version == "rhel7"
+#if $el_version == "rhel7"
 part /boot --size=500 --recommended --asprimary
 #else
 part /boot --size=1024 --recommended --asprimary
@@ -20,3 +18,4 @@ logvol /    --vgname=vg0 --name=lv0 --size=1536 --maxsize=3072 --grow --fsoption
 #end if
 logvol /var --vgname=vg0 --name=lv1 --size=512  --maxsize=1024 --grow --fsoption=defaults,noatime
 logvol swap --vgname=vg0 --name=lv2 --size=1024 --maxsize=2048 --grow
+#end if

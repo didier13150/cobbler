@@ -1,0 +1,17 @@
+@core
+postfix
+vim-enhanced
+#set $el_type = $getVar('type', 'minimal')
+#if $el_type == 'desktop'
+@base
+@network-tools
+@graphical-admin-tools
+#set $el_version = $getVar('os_version', None)
+#if $el_version == 'rhel7'
+@gnome-desktop
+@x11
+#else if $el_version == 'rhel8'
+@graphical-server-environment
+#end if
+#end if
+kernel
